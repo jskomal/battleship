@@ -37,4 +37,33 @@ RSpec.describe Cell do
     expect(@cell.ship.health).to eq(2)
     expect(@cell.fired_upon?).to eq(true)
   end
+
+  it 'should have a render method that defaults to .' do
+    expect(@cell.render).to eq('.')
+  end
+
+  it 'should render a M if a shot missed' do
+    @cell.fire_upon
+    expect(@cell.render).to eq('M')
+  end
+
+  it 'should render a S if the debug parameter is passed and a ship exists in the cell' do
+    cruiser = Ship.new('Crusier', 3)
+    @cell.place_ship(cruiser)
+    expect(@cell.render).to eq('.')
+    expect(@cell.render(true)).to eq('S')
+  end
+
+  it 'should render an H if a ship has been hit' do
+    cruiser = Ship.new('Crusier', 3)
+    @cell.place_ship(cruiser)
+    @cell.fire_upon
+    expect(@cell.render).to eq('H')
+    expect(@cell.render(true)).to eq('H')
+    expect(@cell.ship.sunk?).to eq(false)
+    @cell.ship.hit
+    @cell.ship.hit
+    expect(@cell.ship.sunk?).to eq(true)
+    expect(@cell.render).to eq('X')
+  end
 end
