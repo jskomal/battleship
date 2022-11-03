@@ -23,7 +23,8 @@ RSpec.describe Cell do
   end
 
   it 'should be able to place a ship in a cell' do
-    @cell.place_ship
+    cruiser = Ship.new('Crusier', 3)
+    @cell.place_ship(cruiser)
     expect(@cell.ship).to be_instance_of(Ship)
     expect(@cell.empty?).to eq(false)
   end
