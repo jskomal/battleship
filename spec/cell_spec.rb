@@ -27,4 +27,13 @@ RSpec.describe Cell do
     expect(@cell.ship).to be_instance_of(Ship)
     expect(@cell.empty?).to eq(false)
   end
+
+  it 'should be able to be fired upon' do
+    crusier = Ship.new('Crusier', 3)
+    @cell.place_ship(crusier)
+    expect(@cell.fired_upon?).to eq(false)
+    @cell.fire_upon
+    expect(@cell.ship.health).to eq(2)
+    expect(@cell.fired_upon?).to eq(true)
+  end
 end
